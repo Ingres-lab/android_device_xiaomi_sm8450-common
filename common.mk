@@ -49,22 +49,19 @@ PRODUCT_SHIPPING_API_LEVEL := 32
 BOARD_SHIPPING_API_LEVEL := 31
 
 # Audio
-# NOTE (6.6 kernel port): the reference userspace blobs already ship the vendor
-# audio HAL. hardware/qcom-caf/sm8450-6.6/audio no longer builds these legacy
-# 5.10 modules, so requesting them here fails the Make dependency check:
-#   vendor.qti.hardware.AGMIPC@1.0-service  (blob: vendor/bin/hw/)
-#   audio.primary.taro                      (blob: vendor/lib64/hw/)
-#   sound_trigger.primary.taro              (blob: vendor/lib64/hw/)
 PRODUCT_PACKAGES += \
     android.hardware.audio@7.0-impl:64 \
     android.hardware.audio.effect@7.0-impl:64 \
     android.hardware.audio.service \
-    android.hardware.soundtrigger@2.3-impl:64
+    android.hardware.soundtrigger@2.3-impl:64 \
+    vendor.qti.hardware.AGMIPC@1.0-service
 
 PRODUCT_PACKAGES += \
     audio.bluetooth.default:64 \
+    audio.primary.taro \
     audio.r_submix.default:64 \
-    audio.usb.default:64
+    audio.usb.default:64 \
+    sound_trigger.primary.taro
 
 PRODUCT_PACKAGES += \
     audioadsprpcd

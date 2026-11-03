@@ -1,2 +1,6 @@
 get_prop({ appdomain -isolated_app_all }, vendor_fp_prop)
 get_prop({ appdomain -isolated_app_all }, vendor_payment_security_prop)
+
+# Wine/Winlator NT sync primitives
+allow appdomain ntsync_device:chr_file rw_file_perms;
+allowxperm appdomain ntsync_device:chr_file ioctl { 0x4e80-0x4e8d };

@@ -12,3 +12,5 @@ type vendor_radio_smd_device, dev_type;
 
 # Touchscreen
 type touchfeature_device, dev_type;
+
+type ntsync_device, dev_type;

@@ -1,0 +1,2 @@
+# Bypass charging (init.neo.rc)
+allow vendor_init vendor_sysfs_battery_supply:file w_file_perms;

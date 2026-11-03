@@ -19,3 +19,6 @@ vendor_public_prop(vendor_panel_info_prop)
 
 # Thermal
 vendor_public_prop(vendor_thermal_normal_prop)
+
+# Neo
+vendor_public_prop(vendor_neo_prop)

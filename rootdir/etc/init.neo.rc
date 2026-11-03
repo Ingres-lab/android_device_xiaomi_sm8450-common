@@ -1,0 +1,30 @@
+#
+# SPDX-FileCopyrightText: Neo
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# Bypass charging (NeoParts). night_charging makes the charger firmware run
+# the phone from the adapter and stop charging once the battery is >= 80%.
+on property:persist.vendor.neo.bypass=1
+    write /sys/class/qcom-battery/night_charging 1
+
+on property:persist.vendor.neo.bypass=0
+    write /sys/class/qcom-battery/night_charging 0
+
+on property:sys.boot_completed=1 && property:persist.vendor.neo.bypass=1
+    write /sys/class/qcom-battery/night_charging 1
+
+# SELinux mode (NeoParts). The policy forbids setenforce from every enforcing
+# domain, so a small helper in its own userdebug-only permissive domain does it.
+service vendor.neo-selinux /vendor/bin/init.neo.selinux.sh
+    class late_start
+    user root
+    group root
+    oneshot
+    disabled
+
+on property:persist.vendor.neo.selinux=*
+    start vendor.neo-selinux
+
+on property:sys.boot_completed=1 && property:persist.vendor.neo.selinux=permissive
+    start vendor.neo-selinux

@@ -48,6 +48,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_SHIPPING_API_LEVEL := 32
 BOARD_SHIPPING_API_LEVEL := 31
 
+# The 6.6 kernel is newer than any entry in the FCM level 7 (API 32) kernel matrix, so the
+# OTA kernel-vs-FCM check cannot match it. HAL matrix checks are unaffected.
+PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := false
+
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio@7.0-impl:64 \

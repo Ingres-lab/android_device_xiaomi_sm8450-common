@@ -1,0 +1,8 @@
+;; new_objects - types added by this device tree that have no analogue in
+;;   older policy, so they need no compat mapping. Listed to pass the treble
+;;   sepolicy (checkapi) tests.
+(type new_objects)
+(typeattribute new_objects)
+(typeattributeset new_objects
+  ( new_objects
+    system_neo_prop))

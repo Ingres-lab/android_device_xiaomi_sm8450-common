@@ -4,6 +4,9 @@ set_prop(vendor_init, vendor_thermal_normal_prop)
 set_prop(vendor_init, vendor_ssr_prop)
 set_prop(vendor_init, vendor_qcc_prop)
 
+# NeoParts GPU driver: bind vulkan.turnip.so over vulkan.adreno.so (init.neo.rc)
+allow init same_process_hal_file:file mounton;
+
 recovery_only(`
 allow init proc:file write;
 ')

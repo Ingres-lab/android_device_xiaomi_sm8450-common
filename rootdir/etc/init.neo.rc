@@ -5,14 +5,24 @@
 
 # Bypass charging (NeoParts). night_charging makes the charger firmware run
 # the phone from the adapter and stop charging once the battery is >= 80%.
-on property:persist.vendor.neo.bypass=1
+on property:persist.sys.neo.bypass=1
     write /sys/class/qcom-battery/night_charging 1
 
-on property:persist.vendor.neo.bypass=0
+on property:persist.sys.neo.bypass=0
     write /sys/class/qcom-battery/night_charging 0
 
-on property:sys.boot_completed=1 && property:persist.vendor.neo.bypass=1
+on property:sys.boot_completed=1 && property:persist.sys.neo.bypass=1
     write /sys/class/qcom-battery/night_charging 1
+
+# Vulkan driver (NeoParts): persist.sys.neo.gpu = adreno (default) | turnip.
+# init.rc runs load_persist_props in its own post-fs-data action, which runs
+# before this one, so the property is already loaded here; and post-fs-data
+# runs before zygote-start, so the driver is in place before zygote preloads
+# Vulkan and before SurfaceFlinger (class core, on boot) starts. The value is
+# only read here, so a change applies on the next reboot. "adreno" binds the
+# stock file onto itself, which is a no-op.
+on post-fs-data
+    mount none /vendor/lib64/hw/vulkan.${persist.sys.neo.gpu:-adreno}.so /vendor/lib64/hw/vulkan.adreno.so bind
 
 # SELinux mode (NeoParts). The policy forbids setenforce from every enforcing
 # domain, so a small helper in its own userdebug-only permissive domain does it.
@@ -23,8 +33,8 @@ service vendor.neo-selinux /vendor/bin/init.neo.selinux.sh
     oneshot
     disabled
 
-on property:persist.vendor.neo.selinux=*
+on property:persist.sys.neo.selinux=*
     start vendor.neo-selinux
 
-on property:sys.boot_completed=1 && property:persist.vendor.neo.selinux=permissive
+on property:sys.boot_completed=1 && property:persist.sys.neo.selinux=permissive
     start vendor.neo-selinux

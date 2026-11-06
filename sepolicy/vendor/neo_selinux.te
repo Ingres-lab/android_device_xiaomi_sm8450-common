@@ -1,4 +1,4 @@
-# Helper that applies persist.vendor.neo.selinux. system/sepolicy has
+# Helper that applies persist.sys.neo.selinux. system/sepolicy has
 # "neverallow * kernel:security setenforce", so it cannot be granted; the
 # domain is permissive on userdebug/eng builds instead and is inert on user.
 type neo_selinux, domain;
@@ -8,7 +8,7 @@ init_daemon_domain(neo_selinux)
 
 allow neo_selinux vendor_shell_exec:file rx_file_perms;
 allow neo_selinux vendor_toolbox_exec:file rx_file_perms;
-get_prop(neo_selinux, vendor_neo_prop)
+get_prop(neo_selinux, system_neo_prop)
 
 userdebug_or_eng(`
   permissive neo_selinux;

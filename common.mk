@@ -244,11 +244,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.keystore.app_attest_key.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.keystore.app_attest_key.xml
 
-# Lineage Health
-PRODUCT_PACKAGES += \
-    vendor.lineage.health-service.default
-
-$(call soong_config_set_bool,lineage_health,charging_control_supports_bypass,false)
+# Lineage Health (charging control) is not shipped: it writes the same
+# qcom-battery/night_charging node as NeoParts' bypass switch and resets it to
+# "charging allowed" at every boot, even with Charging control disabled.
+# NeoParts (persist.sys.neo.bypass, init.neo.rc) is the only owner of that node.
 
 # Media
 PRODUCT_PACKAGES += \

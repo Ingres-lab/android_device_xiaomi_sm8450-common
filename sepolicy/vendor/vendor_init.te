@@ -1,2 +1,8 @@
 # Bypass charging (init.neo.rc)
 allow vendor_init vendor_sysfs_battery_supply:file w_file_perms;
+
+# Neo: init only keeps a vendor .rc "on property:" trigger if vendor_init may
+# read that property. Without this every persist.sys.neo.* action (bypass
+# charging, SELinux mode, shoulder trigger daemon, Vulkan driver choice) is
+# silently dropped when init parses the file.
+get_prop(vendor_init, system_neo_prop)

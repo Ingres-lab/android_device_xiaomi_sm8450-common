@@ -1,0 +1,3 @@
+# Neo smooth motion video: MediaCodec (frameworks/av) runs inside each app and
+# reads its per-app choice from persist.sys.neo.smooth.*.
+get_prop({ appdomain -isolated_app_all }, system_neo_smooth_prop)

@@ -5,4 +5,5 @@
 (typeattribute new_objects)
 (typeattributeset new_objects
   ( new_objects
-    system_neo_prop))
+    system_neo_prop
+    system_neo_smooth_prop))

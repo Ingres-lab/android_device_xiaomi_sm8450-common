@@ -1,2 +1,5 @@
 # Neo
 system_restricted_prop(system_neo_prop)
+
+# Smooth motion video (NeoParts writes, the MediaCodec hook in every app reads)
+system_public_prop(system_neo_smooth_prop)

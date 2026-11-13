@@ -24,6 +24,21 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch_with_ven
 # Setup dalvik vm configs
 $(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
 
+# Dolby Atmos (Neo): only when the local hardware/dolby tree is present (proprietary
+# blobs, not part of the published manifest). Must stay above the vendor makefile:
+# for PRODUCT_COPY_FILES the first destination wins, and the proprietary
+# media_codecs_taro.xml would otherwise replace the one with the Dolby include.
+# Effect chain and ingres DAX tuning (incl. speaker_landscape_180) from Infinity-X 3.12;
+# the spatializer points at Dolby's libswspatializer.so (Infinity-X referenced
+# Qualcomm's libspatialaudio.so, which is not shipped).
+ifneq ($(wildcard hardware/dolby/dolby.mk),)
+NEO_DOLBY := true
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/audio/dolby/dax-default.xml:$(TARGET_COPY_OUT_VENDOR)/etc/dolby/dax-default.xml \
+    $(LOCAL_PATH)/audio/dolby/media_codecs_taro.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_taro.xml
+$(call inherit-product, hardware/dolby/dolby.mk)
+endif
+
 # Inherit from the proprietary version
 $(call inherit-product, vendor/xiaomi/sm8450-common/sm8450-common-vendor.mk)
 
@@ -88,7 +103,7 @@ $(call soong_config_set, android_hardware_audio, run_64bit, true)
 
 $(foreach sku, taro diwali cape ukee parrot, \
     $(eval PRODUCT_COPY_FILES += \
-        $(LOCAL_PATH)/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_$(sku)/audio_effects.xml \
+        $(LOCAL_PATH)/audio/$(if $(NEO_DOLBY),dolby/)audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_$(sku)/audio_effects.xml \
         $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/sku_$(sku)/audio_policy_configuration.xml \
     ))
 

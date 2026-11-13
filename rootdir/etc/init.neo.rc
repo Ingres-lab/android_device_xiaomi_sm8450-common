@@ -38,3 +38,13 @@ on property:persist.sys.neo.selinux=*
 
 on property:sys.boot_completed=1 && property:persist.sys.neo.selinux=permissive
     start vendor.neo-selinux
+
+# Color accuracy / flat mode (NeoParts): Xiaomi display feature 6 through
+# mi_disp's disp_param. The kernel keeps the request across panel power-off and
+# re-sends it on the first frame after power-on, so it is only written when the
+# setting changes and once when persistent properties are loaded at boot.
+on property:persist.sys.neo.flat=1
+    write /sys/devices/virtual/mi_display/disp_feature/disp-DSI-0/disp_param "6 1"
+
+on property:persist.sys.neo.flat=0
+    write /sys/devices/virtual/mi_display/disp_feature/disp-DSI-0/disp_param "6 0"

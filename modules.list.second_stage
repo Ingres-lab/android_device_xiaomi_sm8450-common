@@ -42,9 +42,7 @@ eud.ko
 qcom_soc_wdt.ko
 sys_pm_vx.ko
 msm_ext_display.ko
-icnss2.ko
 memlat.ko
-qcom_logbuf_vendor_hooks.ko
 hung_task_enh.ko
 qcom_pm8008-regulator.ko
 frpc-adsprpc.ko

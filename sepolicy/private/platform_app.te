@@ -1,3 +1,4 @@
 # NeoParts
 set_prop(platform_app, system_neo_prop)
 set_prop(platform_app, system_neo_smooth_prop)
+set_prop(platform_app, system_neo_spoof_prop)

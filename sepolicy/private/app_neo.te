@@ -1,3 +1,7 @@
 # Neo smooth motion video: MediaCodec (frameworks/av) runs inside each app and
 # reads its per-app choice from persist.sys.neo.smooth.*.
 get_prop({ appdomain -isolated_app_all }, system_neo_smooth_prop)
+
+# Neo Pixel / Play Integrity spoof: NeoPropHooks reads persist.sys.neo.{pif,pixel}.*
+# at app start (only in DroidGuard and the Pixel target apps, never isolated ones)
+get_prop({ appdomain -isolated_app_all }, system_neo_spoof_prop)

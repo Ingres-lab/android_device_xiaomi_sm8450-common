@@ -39,6 +39,23 @@ PRODUCT_COPY_FILES += \
 $(call inherit-product, hardware/dolby/dolby.mk)
 endif
 
+# Face unlock (Neo): ParanoidSense with Megvii's face libraries, only when the local
+# packages/apps/FaceUnlock tree is present (proprietary libraries, not in the published
+# manifest). Needs the SenseProvider commits in frameworks/base; FaceService only starts
+# when the face feature is declared, and uses the Sense provider when
+# ro.face.sense_service is set. Weak (class 1) biometric: unlocks the lock screen, not
+# apps that require strong biometrics.
+ifneq ($(wildcard packages/apps/FaceUnlock/Android.bp),)
+PRODUCT_PACKAGES += \
+    ParanoidSense
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.biometrics.face.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.biometrics.face.xml
+
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+    ro.face.sense_service=true
+endif
+
 # Inherit from the proprietary version
 $(call inherit-product, vendor/xiaomi/sm8450-common/sm8450-common-vendor.mk)
 

@@ -5,3 +5,8 @@ get_prop({ appdomain -isolated_app_all }, system_neo_smooth_prop)
 # Neo Pixel / Play Integrity spoof: NeoPropHooks reads persist.sys.neo.{pif,pixel}.*
 # at app start (only in DroidGuard and the Pixel target apps, never isolated ones)
 get_prop({ appdomain -isolated_app_all }, system_neo_spoof_prop)
+
+# Neo shoulder triggers: NeoParts polls sys.neo.trigger.pop (set by neo_triggerd) to open
+# the trigger editor when a trigger is popped up. Without this read grant the value always
+# reads as 0 (platform_app, like shell, has no implicit access to a public system prop).
+get_prop({ appdomain -isolated_app_all }, system_neo_trigger_prop)

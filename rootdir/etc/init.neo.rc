@@ -48,3 +48,22 @@ on property:persist.sys.neo.flat=1
 
 on property:persist.sys.neo.flat=0
     write /sys/devices/virtual/mi_display/disp_feature/disp-DSI-0/disp_param "6 0"
+
+# Foreground apps are latency sensitive (as on Pixel): EAS/WALT task placement then
+# prefers idle CPUs for top-app tasks instead of packing them. It does not raise clocks.
+on property:sys.boot_completed=1
+    write /dev/cpuctl/top-app/cpu.uclamp.latency_sensitive 1
+
+# Game performance mode (NeoParts > Gaming): while a chosen game is the focused app,
+# top-app gets a utilization floor (uclamp.min, honoured by WALT). Threads that mostly wait
+# on each other look idle to WALT, which then parks the cluster at its minimum clock and
+# makes every cross-core hand-off ~2.7x slower; 50% keeps ntsync round trips near full
+# speed (14.5 us vs 34.5 us measured). Re-applied when the level changes while active.
+on property:sys.neo.game.boost=1
+    write /dev/cpuctl/top-app/cpu.uclamp.min ${persist.sys.neo.game.floor:-50}
+
+on property:sys.neo.game.boost=1 && property:persist.sys.neo.game.floor=*
+    write /dev/cpuctl/top-app/cpu.uclamp.min ${persist.sys.neo.game.floor:-50}
+
+on property:sys.neo.game.boost=0
+    write /dev/cpuctl/top-app/cpu.uclamp.min 0

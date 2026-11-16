@@ -4,4 +4,5 @@ persist.sys.neo.smooth. u:object_r:system_neo_smooth_prop:s0
 persist.sys.neo.pif. u:object_r:system_neo_spoof_prop:s0
 persist.sys.neo.pixel. u:object_r:system_neo_spoof_prop:s0
 sys.neo.led. u:object_r:system_neo_prop:s0
+sys.neo.game. u:object_r:system_neo_prop:s0
 sys.neo.trigger. u:object_r:system_neo_trigger_prop:s0

@@ -78,3 +78,6 @@
 
 # Neo
 /vendor/bin/init\.neo\.selinux\.sh u:object_r:neo_selinux_exec:s0
+
+# Neo vibrator HAL (AW86927)
+/(vendor|system/vendor)/bin/hw/vendor\.neo\.hardware\.vibrator\.service u:object_r:hal_vibrator_default_exec:s0

@@ -6,3 +6,6 @@ system_public_prop(system_neo_smooth_prop)
 
 # Per-app Pixel / Play Integrity spoof (NeoParts writes, NeoPropHooks reads in apps)
 system_public_prop(system_neo_spoof_prop)
+
+# Shoulder trigger lock state (neo_triggerd writes, NeoParts reads)
+system_public_prop(system_neo_trigger_prop)

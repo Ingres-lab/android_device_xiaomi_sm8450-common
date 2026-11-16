@@ -10,3 +10,6 @@ get_prop(vendor_init, system_neo_prop)
 # Neo: color accuracy (flat mode) writes mi_disp's disp_param
 allow vendor_init vendor_sysfs_displayfeature:dir search;
 allow vendor_init vendor_sysfs_displayfeature:file w_file_perms;
+
+# Neo: neo-triggerd.rc clears the trigger lock state when mapping is switched off
+set_prop(vendor_init, system_neo_trigger_prop)

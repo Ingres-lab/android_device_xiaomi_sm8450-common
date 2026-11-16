@@ -7,4 +7,5 @@
   ( new_objects
     system_neo_prop
     system_neo_smooth_prop
-    system_neo_spoof_prop))
+    system_neo_spoof_prop
+    system_neo_trigger_prop))
